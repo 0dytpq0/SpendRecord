@@ -37,7 +37,8 @@ function DetailForm() {
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.preventDefault();
     if (window.confirm("삭제 하시겠습니까?")) {
       const action = deleteData();
       dispatch(action);
