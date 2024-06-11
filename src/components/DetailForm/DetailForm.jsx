@@ -18,10 +18,12 @@ function DetailForm() {
 
   const { mutate: deleteRecordToServer } = useMutation({
     mutationFn: (id) => api.record.deleteRecord(id),
+    onSuccess: queryClient.invalidateQueries(["records"]),
   });
 
   const { mutate: updateRecordToServer } = useMutation({
     mutationFn: ({ id, data }) => api.record.updateRecord(id, data),
+    onSuccess: queryClient.invalidateQueries(["records"]),
   });
 
   useEffect(() => {
@@ -43,7 +45,6 @@ function DetailForm() {
 
       updateRecordToServer({ id: params.id, data: newData });
 
-      queryClient.invalidateQueries(["records"]);
       navigate(-1);
     } else {
       return alert("날짜는 YYYY-MM-DD ");
@@ -55,7 +56,6 @@ function DetailForm() {
     if (window.confirm("삭제 하시겠습니까?")) {
       deleteRecordToServer(params.id);
 
-      queryClient.invalidateQueries(["records"]);
       navigate(-1);
     }
   };

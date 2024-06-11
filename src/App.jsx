@@ -8,10 +8,10 @@ import router from "./routes/router";
 function App() {
   return (
     <QueryProvider>
-      <Div>
+      <>
         <GlobalStyle />
         <RouterProvider router={router} />
-      </Div>
+      </>
     </QueryProvider>
   );
 }

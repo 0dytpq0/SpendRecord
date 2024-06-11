@@ -11,9 +11,9 @@ class Auth {
   // }
   async signUp(data) {
     const path = "/register";
-
-    const response = this.#axios.post(path, data);
-    const result = response.result;
+    console.log("data", data);
+    const response = await this.#axios.post(path, data);
+    const result = response;
 
     return result;
   }
@@ -22,10 +22,11 @@ class Auth {
   //   "password": "유저 비밀번호"
   // }
   async signIn(data) {
-    const path = "login";
-
-    const response = this.#axios.post(path, data);
-    const result = response.result;
+    const path = "/login";
+    console.log("data", data);
+    const response = await this.#axios.post(path, data);
+    const result = response;
+    console.log("response", response);
 
     return result;
   }
@@ -33,8 +34,8 @@ class Auth {
   async getUserInfo() {
     const path = "/user";
 
-    const response = this.#axios.get(path);
-    const result = response.result;
+    const response = await this.#axios.get(path);
+    const result = response;
 
     return result;
   }
@@ -46,7 +47,7 @@ class Auth {
   async updateProfile(data) {
     const path = "/profile";
 
-    const response = this.#axios.patch(path, data);
+    const response = await this.#axios.patch(path, data);
     const result = response.result;
 
     return result;

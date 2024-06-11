@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
+import SignIn from "../components/SignIn";
+import SignUp from "../components/SignUp/SignUp";
 import DefaultLayout from "../layouts/DefaultLayout";
 import DetailPage from "../pages/DetailPage/DetailPage";
 import HomePage from "../pages/HomePage/HomePage";
@@ -16,6 +18,14 @@ const router = createBrowserRouter([
       {
         path: "/detailRecord/:id",
         element: <DetailPage />,
+      },
+      {
+        path: "/SignIn",
+        element: <SignIn />,
+      },
+      {
+        path: "/SignUp",
+        element: <SignUp />,
       },
     ],
   },

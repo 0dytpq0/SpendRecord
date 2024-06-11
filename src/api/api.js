@@ -15,7 +15,7 @@ class API {
   constructor() {
     this.#axios = axios.create({ baseURL: BASE_URL });
     this.record = new Record(this.#axios);
-    this.auth = new Auth(axios.create({ baseIRL: AUTH_URL }));
+    this.auth = new Auth(axios.create({ baseURL: AUTH_URL }));
   }
 }
 
