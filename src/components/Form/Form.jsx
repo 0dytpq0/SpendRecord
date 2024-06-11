@@ -2,11 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import api from "../../api/api";
-import {
-  changeValue,
-  createData,
-  initFormData,
-} from "../../redux/slices/record.slice";
+import { changeValue, initFormData } from "../../redux/slices/record.slice";
 import { isTextExistValid } from "../DetailForm/detailFormValidator";
 import { isAmountVailid, isDateValid } from "./formValidator";
 
@@ -40,8 +36,7 @@ function Form() {
       spendDetail: selector.spendDetail,
     };
     postRecordToServer(dataObj);
-    queryClient.cancelQueries({ queryKey: "records" });
-    dispatch(createData(dataObj));
+    queryClient.invalidateQueries({ queryKey: "records" });
     dispatch(initFormData());
   };
 

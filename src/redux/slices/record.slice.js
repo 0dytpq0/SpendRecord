@@ -20,27 +20,6 @@ const recordSlice = createSlice({
   name: "record",
   initialState,
   reducers: {
-    createData: (state, action) => {
-      state.recordList.push(action.payload);
-    },
-
-    deleteData: (state) => {
-      const recordIdx = state.recordList.findIndex(
-        (item) => item.id === state.selectedItemId
-      );
-      const deletedRecordList = state.recordList.splice(recordIdx, 1);
-
-      state.recordList = deletedRecordList;
-    },
-
-    updateData: (state, action) => {
-      const recordIdx = state.recordList.findIndex(
-        (item) => item.id === state.selectedItemId
-      );
-
-      state.recordList[recordIdx] = action.payload;
-    },
-
     changeMonth: (state, action) => {
       state.month = action.payload;
     },
@@ -50,19 +29,14 @@ const recordSlice = createSlice({
     initFormData: (state) => {
       initializeFormData(state);
     },
-    initRecords: (state, action) => {
-      state.recordList = action.payload;
-    },
+
     selectItem: (state, action) => {
-      const selectedItem = state.recordList.filter(
-        (item) => item.id === action.payload
-      )[0];
       console.log("action.payload", action.payload);
-      state.selectedItemId = action.payload;
-      state.date = selectedItem.date;
-      state.amount = selectedItem.amount;
-      state.spendItem = selectedItem.spendItem;
-      state.spendDetail = selectedItem.spendDetail;
+      state.selectedItemId = action.payload.id;
+      state.date = action.payload.date;
+      state.amount = action.payload.amount;
+      state.spendItem = action.payload.spendItem;
+      state.spendDetail = action.payload.spendDetail;
     },
   },
 });

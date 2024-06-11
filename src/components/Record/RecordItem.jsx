@@ -22,7 +22,14 @@ function RecordItem() {
             key={item.id}
             to={`/detailRecord/${item.id}`}
             onClick={() => {
-              const action = selectItem(item.id);
+              const dataObj = {
+                id: item.id,
+                date: item.date,
+                amount: item.amount,
+                spendItem: item.spendItem,
+                spendDetail: item.spendDetail,
+              };
+              const action = selectItem(dataObj);
               dispatch(action);
             }}
           >

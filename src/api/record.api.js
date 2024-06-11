@@ -6,7 +6,7 @@ class Record {
   }
 
   async getRecord() {
-    const path = `/record`;
+    const path = `/records`;
 
     const response = await this.#axios.get(path);
     const result = response.data;
@@ -19,7 +19,7 @@ class Record {
   }
 
   async postRecord(data) {
-    const path = `/record`;
+    const path = `/records`;
     console.log("data", data);
     const response = await this.#axios.post(path, data);
     const result = response.data;
@@ -28,7 +28,7 @@ class Record {
   }
 
   async deleteRecord(id) {
-    const path = `/record/${id}`;
+    const path = `/records/${id}`;
     console.log("id", id);
     const response = await this.#axios.delete(path);
     const result = response.data;
@@ -37,7 +37,7 @@ class Record {
   }
 
   async updateRecord(id, data) {
-    const path = `/record/${id}`;
+    const path = `/records/${id}`;
     console.log("data", data, id);
     const response = await this.#axios.patch(path, data);
     const result = response.data;

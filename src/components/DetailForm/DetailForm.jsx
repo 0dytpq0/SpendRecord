@@ -1,20 +1,17 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
-import {
-  changeValue,
-  deleteData,
-  initFormData,
-  updateData,
-} from "../../redux/slices/record.slice";
+import { changeValue } from "../../redux/slices/record.slice";
 import { isDateValid } from "./detailFormValidator";
 
 function DetailForm() {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.record);
+  const queryClient = useQueryClient();
+  const params = useParams();
 
   const navigate = useNavigate();
   const dateRef = useRef(null);
@@ -44,9 +41,9 @@ function DetailForm() {
         spendDetail: selector.spendDetail,
       };
 
-      updateRecordToServer({ id: selector.selectedItemId, data: newData });
-      dispatch(updateData(newData));
-      dispatch(initFormData());
+      updateRecordToServer({ id: params.id, data: newData });
+
+      queryClient.invalidateQueries({ queryKey: "records" });
       navigate(-1);
     } else {
       return alert("날짜는 YYYY-MM-DD ");
@@ -56,10 +53,9 @@ function DetailForm() {
   const handleDelete = (e) => {
     e.preventDefault();
     if (window.confirm("삭제 하시겠습니까?")) {
-      deleteRecordToServer(selector.selectedItemId);
-      const action = deleteData();
-      dispatch(action);
+      deleteRecordToServer(params.id);
 
+      queryClient.invalidateQueries({ queryKey: "records" });
       navigate(-1);
     }
   };
