@@ -1,3 +1,39 @@
 {
-  "record": []
+  "record": [
+    {
+      "id": "6ce8",
+      "date": "2024-06-11",
+      "amount": "123",
+      "spendItem": "하이아이이",
+      "spendDetail": "마이캬이이"
+    },
+    {
+      "id": "70c7",
+      "date": "2024-06-11",
+      "amount": "0123",
+      "spendItem": "ㅂㄷㅈㄷㅂㅈ",
+      "spendDetail": "ㅀㅁㄴㅇㅎㄱㄷㅎ"
+    },
+    {
+      "id": "8b4d",
+      "date": "2024-06-11",
+      "amount": "123",
+      "spendItem": "ㅁㅇㄴ",
+      "spendDetail": "ㅁㄴㅇㅁㄴㅇ"
+    },
+    {
+      "id": "4abb",
+      "date": "2024-06-11",
+      "amount": "123",
+      "spendItem": "ㅁㄴㅇ",
+      "spendDetail": "ㅈㄷ"
+    },
+    {
+      "id": "982a",
+      "date": "2024-06-11",
+      "amount": "0123",
+      "spendItem": "ㅁㄴㅇ",
+      "spendDetail": "ㅁㄴㅇ"
+    }
+  ]
 }

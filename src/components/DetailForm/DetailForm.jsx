@@ -116,7 +116,14 @@ function DetailForm() {
       <ButtonBox>
         <Button onClick={handleUpdate}>수정</Button>
         <Button onClick={handleDelete}>삭제</Button>
-        <Button onClick={() => navigate(-1)}>뒤로가기</Button>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(-1);
+          }}
+        >
+          뒤로가기
+        </Button>
       </ButtonBox>
     </Container>
   );

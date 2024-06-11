@@ -2,14 +2,17 @@ import { RouterProvider } from "react-router-dom";
 import styled from "styled-components";
 import "./App.css";
 import GlobalStyle from "./GlobalStyle";
+import QueryProvider from "./query/queryClient";
 import router from "./routes/router";
 
 function App() {
   return (
-    <Div>
-      <GlobalStyle />
-      <RouterProvider router={router} />
-    </Div>
+    <QueryProvider>
+      <Div>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+      </Div>
+    </QueryProvider>
   );
 }
 
