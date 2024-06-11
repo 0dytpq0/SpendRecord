@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import Profile from "../components/Profile";
-import SignIn from "../components/SignIn";
-import SignUp from "../components/SignUp/SignUp";
 import DefaultLayout from "../layouts/DefaultLayout";
 import DetailPage from "../pages/DetailPage/DetailPage";
 import HomePage from "../pages/HomePage/HomePage";
 import HomePageLoader from "../pages/HomePage/HomePage.loader";
+import ProfilePage from "../pages/ProfilePage";
+import SignInPage from "../pages/SignInPage/SignInPage";
+import SignUpPage from "../pages/SignUpPage";
 
 const router = createBrowserRouter([
   {
@@ -22,15 +22,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/SignIn",
-        element: <SignIn />,
+        element: <SignInPage />,
       },
       {
         path: "/SignUp",
-        element: <SignUp />,
+        element: <SignUpPage />,
       },
       {
         path: "/Profile",
-        element: <Profile />,
+        element: <ProfilePage />,
       },
     ],
   },

@@ -35,8 +35,8 @@ class Auth {
     const path = "/user";
 
     const response = await this.#axios.get(path);
-    const result = response;
-
+    const result = response.data;
+    console.log("response", response);
     return result;
   }
 

@@ -6,7 +6,7 @@ function Header() {
     <HeaderContainer>
       <HeaderButtonContainer>
         <HeaderButton to={"/"}>HOME</HeaderButton>
-        <HeaderButton to={""}>내 프로필</HeaderButton>
+        <HeaderButton to={"/Profile"}>내 프로필</HeaderButton>
       </HeaderButtonContainer>
       <HeaderButtonContainer>
         <HeaderButton>박요셉(리액트)</HeaderButton>
