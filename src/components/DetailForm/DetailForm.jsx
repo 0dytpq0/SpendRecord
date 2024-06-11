@@ -1,7 +1,9 @@
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import api from "../../api/api";
 import {
   changeValue,
   deleteData,
@@ -17,6 +19,14 @@ function DetailForm() {
   const navigate = useNavigate();
   const dateRef = useRef(null);
 
+  const { mutate: deleteRecordToServer } = useMutation({
+    mutationFn: (id) => api.record.deleteRecord(id),
+  });
+
+  const { mutate: updateRecordToServer } = useMutation({
+    mutationFn: ({ id, data }) => api.record.updateRecord(id, data),
+  });
+
   useEffect(() => {
     if (dateRef.current) {
       dateRef.current.focus();
@@ -27,10 +37,16 @@ function DetailForm() {
   const handleUpdate = (e) => {
     e.preventDefault();
     if (isDateValid(selector.date)) {
-      const action = updateData();
-      const initAction = initFormData();
-      dispatch(action);
-      dispatch(initAction);
+      const newData = {
+        date: selector.date,
+        amount: selector.amount,
+        spendItem: selector.spendItem,
+        spendDetail: selector.spendDetail,
+      };
+
+      updateRecordToServer({ id: selector.selectedItemId, data: newData });
+      dispatch(updateData(newData));
+      dispatch(initFormData());
       navigate(-1);
     } else {
       return alert("날짜는 YYYY-MM-DD ");
@@ -40,6 +56,7 @@ function DetailForm() {
   const handleDelete = (e) => {
     e.preventDefault();
     if (window.confirm("삭제 하시겠습니까?")) {
+      deleteRecordToServer(selector.selectedItemId);
       const action = deleteData();
       dispatch(action);
 

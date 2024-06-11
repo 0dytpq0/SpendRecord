@@ -1,39 +1,25 @@
 {
   "record": [
     {
-      "id": "6ce8",
+      "id": "c61b",
+      "date": "2024-06-11",
+      "amount": "123214214",
+      "spendItem": "4512124412412",
+      "spendDetail": "ㅇㅁㄴㅇㄴㅁㅇㄴㅁㅇㄴ"
+    },
+    {
+      "id": "b5cd",
       "date": "2024-06-11",
       "amount": "123",
-      "spendItem": "하이아이이",
-      "spendDetail": "마이캬이이"
+      "spendItem": "123123",
+      "spendDetail": "123123"
     },
     {
-      "id": "70c7",
+      "id": "c22a",
       "date": "2024-06-11",
-      "amount": "0123",
-      "spendItem": "ㅂㄷㅈㄷㅂㅈ",
-      "spendDetail": "ㅀㅁㄴㅇㅎㄱㄷㅎ"
-    },
-    {
-      "id": "8b4d",
-      "date": "2024-06-11",
-      "amount": "123",
-      "spendItem": "ㅁㅇㄴ",
-      "spendDetail": "ㅁㄴㅇㅁㄴㅇ"
-    },
-    {
-      "id": "4abb",
-      "date": "2024-06-11",
-      "amount": "123",
-      "spendItem": "ㅁㄴㅇ",
-      "spendDetail": "ㅈㄷ"
-    },
-    {
-      "id": "982a",
-      "date": "2024-06-11",
-      "amount": "0123",
-      "spendItem": "ㅁㄴㅇ",
-      "spendDetail": "ㅁㄴㅇ"
+      "amount": "23",
+      "spendItem": "드디어 됬어요23ㅕ",
+      "spendDetail": "설마..?"
     }
   ]
 }

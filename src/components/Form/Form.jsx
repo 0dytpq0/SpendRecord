@@ -1,5 +1,7 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import api from "../../api/api";
 import {
   changeValue,
   createData,
@@ -11,7 +13,11 @@ import { isAmountVailid, isDateValid } from "./formValidator";
 function Form() {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.record);
+  const queryClient = useQueryClient();
 
+  const { mutate: postRecordToServer } = useMutation({
+    mutationFn: (data) => api.record.postRecord(data),
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isDateValid(selector.date))
@@ -27,11 +33,16 @@ function Form() {
       })
     )
       return alert("모든 값을 입력해주세요");
-
-    const createAction = createData();
-    const initAction = initFormData();
-    dispatch(createAction);
-    dispatch(initAction);
+    const dataObj = {
+      date: selector.date,
+      amount: selector.amount,
+      spendItem: selector.spendItem,
+      spendDetail: selector.spendDetail,
+    };
+    postRecordToServer(dataObj);
+    queryClient.cancelQueries({ queryKey: "records" });
+    dispatch(createData(dataObj));
+    dispatch(initFormData());
   };
 
   return (

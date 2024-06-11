@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import api from "../../api/api";
 import getToday from "../../utils/getToday";
 
 const initialState = {
@@ -21,19 +20,11 @@ const recordSlice = createSlice({
   name: "record",
   initialState,
   reducers: {
-    createData: (state) => {
-      const dataObj = {
-        date: state.date,
-        amount: state.amount,
-        spendItem: state.spendItem,
-        spendDetail: state.spendDetail,
-      };
-      api.record.postRecord(dataObj);
-      state.recordList = [dataObj, ...state.recordList];
+    createData: (state, action) => {
+      state.recordList.push(action.payload);
     },
 
     deleteData: (state) => {
-      api.record.deleteRecord(state.selectedItemId);
       const recordIdx = state.recordList.findIndex(
         (item) => item.id === state.selectedItemId
       );
@@ -42,20 +33,12 @@ const recordSlice = createSlice({
       state.recordList = deletedRecordList;
     },
 
-    updateData: (state) => {
-      const newData = {
-        date: state.date,
-        amount: state.amount,
-        spendItem: state.spendItem,
-        spendDetail: state.spendDetail,
-      };
-
+    updateData: (state, action) => {
       const recordIdx = state.recordList.findIndex(
         (item) => item.id === state.selectedItemId
       );
 
-      state.recordList[recordIdx] = newData;
-      api.record.updateRecord(state.selectedItemId, newData);
+      state.recordList[recordIdx] = action.payload;
     },
 
     changeMonth: (state, action) => {

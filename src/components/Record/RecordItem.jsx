@@ -1,33 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
-import { initRecords, selectItem } from "../../redux/slices/record.slice";
+import { selectItem } from "../../redux/slices/record.slice";
 
 function RecordItem() {
-  // const records = useSelector((state) => state.record.recordList);
   const month = useSelector((state) => state.record.month);
   const dispatch = useDispatch();
-  const { data: record } = useQuery({
+  const { data: records } = useQuery({
     queryKey: ["records"],
     queryFn: () => api.record.getRecord(),
   });
-  useEffect(() => {
-    const initRecordList = async () => {
-      try {
-        const data = await api.record.getRecord();
-        dispatch(initRecords(data));
-      } catch (error) {
-        console.error("Failed to fetch records:", error);
-      }
-    };
 
-    initRecordList();
-  }, [dispatch]);
   const paintRecords = () => {
-    return record?.map((item) => {
+    return records?.map((item) => {
       const itemMonth = Number(item.date.slice(5, 7));
       if (itemMonth === month) {
         return (
