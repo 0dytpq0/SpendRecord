@@ -20,6 +20,27 @@
       "amount": "0123",
       "spendItem": "123123",
       "spendDetail": "123"
+    },
+    {
+      "id": "27f0",
+      "date": "2024-06-11",
+      "amount": "023",
+      "spendItem": "123",
+      "spendDetail": "2"
+    },
+    {
+      "id": "0047",
+      "date": "2024-06-11",
+      "amount": "23",
+      "spendItem": "123",
+      "spendDetail": "2"
+    },
+    {
+      "id": "224e",
+      "date": "2024-06-11",
+      "amount": "0123",
+      "spendItem": "123",
+      "spendDetail": "123"
     }
   ]
 }

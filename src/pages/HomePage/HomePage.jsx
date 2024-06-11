@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Form from "../components/Form";
-import Month from "../components/Month/Month";
-import Record from "../components/Record/Record";
+import Form from "../../components/Form";
+import Month from "../../components/Month/Month";
+import Record from "../../components/Record/Record";
 
 function HomePage() {
   return (

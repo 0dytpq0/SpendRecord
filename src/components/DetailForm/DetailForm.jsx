@@ -43,7 +43,7 @@ function DetailForm() {
 
       updateRecordToServer({ id: params.id, data: newData });
 
-      queryClient.invalidateQueries({ queryKey: "records" });
+      queryClient.invalidateQueries(["records"]);
       navigate(-1);
     } else {
       return alert("날짜는 YYYY-MM-DD ");
@@ -55,7 +55,7 @@ function DetailForm() {
     if (window.confirm("삭제 하시겠습니까?")) {
       deleteRecordToServer(params.id);
 
-      queryClient.invalidateQueries({ queryKey: "records" });
+      queryClient.invalidateQueries(["records"]);
       navigate(-1);
     }
   };

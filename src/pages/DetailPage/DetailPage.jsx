@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import DetailForm from "../components/DetailForm";
+import DetailForm from "../../components/DetailForm";
 
 function DetailPage() {
   return (

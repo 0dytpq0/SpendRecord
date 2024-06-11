@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import RecordItem from "./RecordItem";
+import RecordItems from "./RecordItems";
 
 function Record() {
   return (
     <Container>
-      <RecordItem />
+      <RecordItems />
     </Container>
   );
 }

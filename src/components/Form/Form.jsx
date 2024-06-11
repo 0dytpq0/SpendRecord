@@ -13,6 +13,7 @@ function Form() {
 
   const { mutate: postRecordToServer } = useMutation({
     mutationFn: (data) => api.record.postRecord(data),
+    onSuccess: queryClient.invalidateQueries(["records"]),
   });
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,8 +36,8 @@ function Form() {
       spendItem: selector.spendItem,
       spendDetail: selector.spendDetail,
     };
+
     postRecordToServer(dataObj);
-    queryClient.invalidateQueries({ queryKey: "records" });
     dispatch(initFormData());
   };
 
