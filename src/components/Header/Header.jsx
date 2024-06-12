@@ -1,7 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import api from "../../api/api";
 
 function Header() {
+  const { data: userInfo } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => api.auth.getUserInfo(),
+  });
   return (
     <HeaderContainer>
       <HeaderButtonContainer>
@@ -9,7 +15,9 @@ function Header() {
         <HeaderButton to={"/Profile"}>내 프로필</HeaderButton>
       </HeaderButtonContainer>
       <HeaderButtonContainer>
-        <HeaderButton>박요셉(리액트)</HeaderButton>
+        <HeaderButton to={"/Profile"}>
+          {userInfo?.nickname ?? "손님"}
+        </HeaderButton>
         <HeaderButton to={"/SignIn"}>로그인</HeaderButton>
       </HeaderButtonContainer>
     </HeaderContainer>

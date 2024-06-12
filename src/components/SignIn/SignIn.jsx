@@ -20,9 +20,6 @@ function SignIn() {
       return data;
     },
   });
-  const { mutate: signOut } = useMutation({
-    mutationFn: () => api.auth.signOut(),
-  });
 
   const handleSignIn = (e) => {
     e.preventDefault();

@@ -1,13 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
 
 function Profile() {
-  const userId = useRef(null);
-  const userPassword = useRef(null);
-
+  const userNickname = useRef(null);
+  const userAvartar = useRef(null);
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const { data: userInfo } = useQuery({
@@ -15,11 +15,20 @@ function Profile() {
     queryFn: () => api.auth.getUserInfo(),
   });
 
+  const { mutate: updateProfile } = useMutation({
+    mutationFn: (data) => api.auth.updateProfile(data),
+    onSuccess: queryClient.invalidateQueries(["userInfo"]),
+  });
+
   const handleSignUp = (e) => {
     e.preventDefault();
 
     try {
-      console.log("userInfo", userInfo);
+      const profileObj = {
+        avatar: "",
+        nickname: userNickname.current.value,
+      };
+      updateProfile(profileObj);
     } catch (error) {
       console.log("error", error);
     }
@@ -28,9 +37,9 @@ function Profile() {
   return (
     <Container onSubmit={handleSignUp}>
       <InputBox>
-        <Label htmlFor="content-date">{userInfo.nickname}</Label>
+        <Label htmlFor="content-date">{userInfo?.nickname ?? "닉네임"}</Label>
         <Input
-          ref={userId}
+          ref={userNickname}
           id="content-date"
           type="text"
           placeholder={"닉네임"}
@@ -39,7 +48,7 @@ function Profile() {
       <InputBox>
         <Label htmlFor="content-item">아바타 이미지</Label>
         <Input
-          ref={userPassword}
+          ref={userAvartar}
           id="content-item"
           type="file"
           placeholder="아바타 이미지"

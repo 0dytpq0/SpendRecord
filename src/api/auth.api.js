@@ -43,10 +43,12 @@ class Auth {
   // }
   async updateProfile(data) {
     const path = "/profile";
-
-    const response = await this.#axios.patch(path, data);
-    const result = response.result;
-
+    const response = await this.#axios.patch(path, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    const result = response.data;
     return result;
   }
 
