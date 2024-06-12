@@ -13,7 +13,6 @@
 
   - 상태 관리를 위해 Props-drilling, Context API, Redux 사용대신 Tanstack Query 를 사용해야 합니다.
 
-- [ ] protectedRouter 구현
 - [ ] Styled-components 로 스타일링 한 부분을 Tailwindcss 를 사용하여 리팩토링을 해 봅시다.
 - [ ] 리액트의 큰 장점 중 하나는 정말 다양한 UI 라이브러리가 존재하고 그것들을 쉽게 내 어플리케이션에서 사용 할 수 있다는 점입니다. Modal, Toast 등 어플리케이션을 화려하게 만들어 줄 수 있는 라이브러리들을 탐험해보고 적용시켜 봅시다.
 - [ ] 기능이 많아지는 만큼 컴포넌트들에서 점점 더 많은 상태관리를 하게 될 텐데요. Custom Hook 을 구현하여 대신 처리하도록 시도해 봅시다.

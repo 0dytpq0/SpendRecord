@@ -11,6 +11,7 @@ function Profile() {
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo"],
     queryFn: () => api.auth.getUserInfo(),
+    retry: false,
   });
 
   const { mutate: updateProfile } = useMutation({

@@ -14,13 +14,14 @@ function DefaultLayout() {
   const excludePaths = ["/SignIn", "/SignUp"];
   const shouldRenderLayout = !excludePaths.includes(location.pathname);
 
-  const { data: userInfo, error: userInfoError } = useQuery({
+  const { error: userInfoError } = useQuery({
     queryKey: ["userInfo"],
     queryFn: async () => {
       const info = await api.auth.getUserInfo();
       setUserInfo(info);
       return info;
     },
+    retry: false,
   });
 
   useEffect(() => {
@@ -29,11 +30,11 @@ function DefaultLayout() {
       alert("로그아웃 되어있습니다.");
       navigate("/SignIn");
     }
-  }, [userInfoError, navigate]);
+  }, [userInfoError]);
 
   return (
     <Div>
-      <Header userInfo={userInfo} />
+      <Header />
       <Outlet />
     </Div>
   );

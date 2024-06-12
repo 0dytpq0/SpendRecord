@@ -1,13 +1,11 @@
 import getToday from "../../../utils/getToday";
 
 export const initialState = {
-  recordList: [],
   month: new Date().getMonth() + 1,
   date: getToday(),
   amount: 0,
   spendItem: "",
   spendDetail: "",
-  selectedItemId: "",
 };
 
 export const actions = (set) => ({

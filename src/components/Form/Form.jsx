@@ -28,6 +28,7 @@ function Form() {
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo"],
     queryFn: () => api.auth.getUserInfo(),
+    retry: false,
   });
 
   const handleSubmit = (e) => {
