@@ -1,46 +1,28 @@
 {
   "records": [
     {
-      "id": "f7ce",
-      "date": "2024-06-11",
-      "amount": 0,
-      "spendItem": "ㅅㅈ",
-      "spendDetail": "ㅅㅈ"
-    },
-    {
-      "id": "1ad1",
-      "date": "2024-06-11",
-      "amount": "123",
-      "spendItem": "ㅁㄴㅇ",
-      "spendDetail": "ㅂㅈㄷ"
-    },
-    {
-      "id": "724c",
-      "date": "2024-06-11",
-      "amount": "0123",
-      "spendItem": "123123",
-      "spendDetail": "123"
-    },
-    {
-      "id": "27f0",
-      "date": "2024-06-11",
-      "amount": "023",
-      "spendItem": "123",
-      "spendDetail": "2"
-    },
-    {
-      "id": "0047",
-      "date": "2024-06-11",
-      "amount": "23",
-      "spendItem": "123",
-      "spendDetail": "2"
-    },
-    {
-      "id": "7a31",
+      "id": "530c",
+      "createdBy": "adsfzcxv",
       "date": "2024-06-12",
       "amount": "123",
-      "spendItem": "ㅁㅁㅁㅁ",
-      "spendDetail": "ㄴㄴㄴ"
+      "spendItem": "크리에이티드",
+      "spendDetail": "바이 유저인포"
+    },
+    {
+      "id": "fcae",
+      "createdBy": "adsfzcxv",
+      "date": "2024-06-12",
+      "amount": 0,
+      "spendItem": "asdw",
+      "spendDetail": "asdw"
+    },
+    {
+      "id": "50c5",
+      "createdBy": "adsfzcxv",
+      "date": "2024-06-12",
+      "amount": "2323",
+      "spendItem": "qweqweqwe",
+      "spendDetail": "asdasdasd"
     }
   ]
 }

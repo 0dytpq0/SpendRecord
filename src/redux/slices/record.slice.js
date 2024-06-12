@@ -51,14 +51,10 @@ const recordSlice = createSlice({
 });
 
 export const {
-  createData,
-  deleteData,
-  updateData,
   changeMonth,
   changeValue,
   initFormData,
   selectItem,
-  initRecords,
   login,
   logout,
 } = recordSlice.actions;

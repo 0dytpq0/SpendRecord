@@ -31,6 +31,7 @@ function SignIn() {
     };
     try {
       signIn(userInfo);
+      navigate("/");
     } catch (error) {
       console.log("error", error);
     }

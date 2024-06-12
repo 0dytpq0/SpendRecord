@@ -1,44 +1,57 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import api from "../../api/api";
-import { changeValue, initFormData } from "../../redux/slices/record.slice";
-import { isTextExistValid } from "../DetailForm/detailFormValidator";
-import { isAmountVailid, isDateValid } from "./formValidator";
+import useRecordStore from "../zustand/record/record.store";
 
 function Form() {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.record);
   const queryClient = useQueryClient();
-
+  const { date, amount, spendItem, spendDetail, changeValue, initFormData } =
+    useRecordStore();
+  console.log(
+    "date, amount, spendItem, spendDetail",
+    date,
+    amount,
+    spendItem,
+    spendDetail
+  );
   const { mutate: postRecordToServer } = useMutation({
     mutationFn: (data) => api.record.postRecord(data),
     onSuccess: queryClient.invalidateQueries(["records"]),
   });
+
+  const { data: userInfo } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => api.auth.getUserInfo(),
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isDateValid(selector.date))
-      return alert("날짜는 YYYY-MM-DD 형식으로 입력해주세요(ex, 2024-05-24)");
-    if (!isAmountVailid(selector.amount))
-      return alert("금액은 숫자만 입력해주세요.");
-    if (
-      !isTextExistValid({
-        date: selector.date,
-        amount: selector.amount,
-        spendItem: selector.spendItem,
-        spendDetail: selector.spendDetail,
-      })
-    )
-      return alert("모든 값을 입력해주세요");
+    // if (!isDateValid(selector.date))
+    //   return alert("날짜는 YYYY-MM-DD 형식으로 입력해주세요(ex, 2024-05-24)");
+    // if (!isAmountVailid(selector.amount))
+    //   return alert("금액은 숫자만 입력해주세요.");
+    // if (
+    //   !isTextExistValid({
+    //     date: selector.date,
+    //     amount: selector.amount,
+    //     spendItem: selector.spendItem,
+    //     spendDetail: selector.spendDetail,
+    //   })
+    // )
+    // return alert("모든 값을 입력해주세요");
     const dataObj = {
-      date: selector.date,
-      amount: selector.amount,
-      spendItem: selector.spendItem,
-      spendDetail: selector.spendDetail,
+      createdBy: userInfo.id,
+      date: date,
+      amount: amount,
+      spendItem: spendItem,
+      spendDetail: spendDetail,
     };
 
     postRecordToServer(dataObj);
-    dispatch(initFormData());
+    initFormData();
   };
 
   return (
@@ -48,14 +61,8 @@ function Form() {
         <Input
           id="content-date"
           type="text"
-          value={selector.date}
-          onChange={(e) => {
-            const action = changeValue({
-              content: e.target.value,
-              type: "date",
-            });
-            dispatch(action);
-          }}
+          value={date}
+          onChange={(e) => changeValue("date", e.target.value)}
         />
       </InputBox>
       <InputBox>
@@ -64,14 +71,8 @@ function Form() {
           id="content-item"
           type="text"
           placeholder="지출 항목"
-          value={selector.spendItem}
-          onChange={(e) => {
-            const action = changeValue({
-              content: e.target.value,
-              type: "spendItem",
-            });
-            dispatch(action);
-          }}
+          value={spendItem}
+          onChange={(e) => changeValue("spendItem", e.target.value)}
         />
       </InputBox>
       <InputBox>
@@ -81,14 +82,8 @@ function Form() {
           type="number"
           step={100}
           placeholder="지출 금액"
-          value={selector.amount}
-          onChange={(e) => {
-            const action = changeValue({
-              content: e.target.value,
-              type: "amount",
-            });
-            dispatch(action);
-          }}
+          value={amount}
+          onChange={(e) => changeValue("amount", e.target.value)}
         />
       </InputBox>
       <InputBox>
@@ -97,15 +92,8 @@ function Form() {
           id="content-detail"
           type="text"
           placeholder="지출 내용"
-          value={selector.spendDetail}
-          onChange={(e) => {
-            const action = changeValue({
-              content: e.target.value,
-              type: "spendDetail",
-            });
-            dispatch(action);
-            "e.target.value", e.target.value;
-          }}
+          value={spendDetail}
+          onChange={(e) => changeValue("spendDetail", e.target.value)}
         />
       </InputBox>
       <ButtonBox>
