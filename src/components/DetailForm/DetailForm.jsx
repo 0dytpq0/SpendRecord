@@ -3,12 +3,14 @@ import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
+import useAuthStore from "../zustand/auth/auth.store";
 import useRecordStore from "../zustand/record/record.store";
 import { isDateValid } from "./detailFormValidator";
 
 function DetailForm() {
   const { date, amount, spendItem, spendDetail, changeValue } =
     useRecordStore();
+  const { signOut } = useAuthStore();
 
   const queryClient = useQueryClient();
   const params = useParams();
@@ -17,13 +19,28 @@ function DetailForm() {
   const dateRef = useRef(null);
 
   const { mutate: deleteRecordToServer } = useMutation({
-    mutationFn: (id) => api.record.deleteRecord(id),
-    onSuccess: queryClient.invalidateQueries(["records"]),
+    mutationFn: async (id) => {
+      await api.auth.getUserInfo();
+
+      return await api.record.deleteRecord(id);
+    },
+    onSuccess: () => queryClient.invalidateQueries(["records"]),
+    onError: () => {
+      signOut();
+      alert("로그인을 하셔야 삭제 가능합니다.");
+    },
   });
 
   const { mutate: updateRecordToServer } = useMutation({
-    mutationFn: ({ id, data }) => api.record.updateRecord(id, data),
-    onSuccess: queryClient.invalidateQueries(["records"]),
+    mutationFn: async ({ id, data }) => {
+      await api.auth.getUserInfo();
+
+      return await api.record.updateRecord(id, data);
+    },
+    onSuccess: () => queryClient.invalidateQueries(["records"]),
+    onError: () => {
+      signOut(), alert("로그인을 하셔야 수정 가능합니다.");
+    },
   });
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import api from "../../api/api";
+import useAuthStore from "../zustand/auth/auth.store";
 import useRecordStore from "../zustand/record/record.store";
 import { isAmountVailid, isDateValid, isTextExistValid } from "./formValidator";
 
@@ -8,16 +9,31 @@ function Form() {
   const queryClient = useQueryClient();
   const { date, amount, spendItem, spendDetail, changeValue, initFormData } =
     useRecordStore();
-
+  const { signOut } = useAuthStore();
   const { mutate: postRecordToServer } = useMutation({
-    mutationFn: (data) => api.record.postRecord(data),
-    onSuccess: queryClient.invalidateQueries(["records"]),
+    mutationFn: async (data) => {
+      await api.auth.getUserInfo();
+
+      return await api.record.postRecord(data);
+    },
+    onSuccess: () => queryClient.invalidateQueries(["records"]),
+    onError: () => {
+      signOut();
+      alert("로그인을 하셔야 추가가 가능합니다.");
+    },
   });
 
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo"],
     queryFn: () => api.auth.getUserInfo(),
   });
+
+  // useEffect(() => {
+  //   if (userInfoError) {
+  //     alert("로그아웃 되어있습니다.");
+  //     navigate("/SignIn");
+  //   }
+  // }, [userInfoError, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,7 +50,7 @@ function Form() {
     )
       return alert("모든 값을 입력해주세요");
     const dataObj = {
-      createdBy: userInfo.id,
+      createdBy: userInfo?.id ?? null,
       date: date,
       amount: amount,
       spendItem: spendItem,

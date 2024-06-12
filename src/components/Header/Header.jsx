@@ -1,14 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import api from "../../api/api";
+import useAuthStore from "../zustand/auth/auth.store";
 
 function Header() {
-  const { data: userInfo } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: () => api.auth.getUserInfo(),
-  });
-  console.log("userInfo", userInfo);
+  const { curUserInfo } = useAuthStore();
+  console.log("curUserInfo", curUserInfo);
   return (
     <HeaderContainer>
       <HeaderButtonContainer>
@@ -18,8 +14,8 @@ function Header() {
       </HeaderButtonContainer>
       <HeaderButtonContainer>
         <ProfileButton to={"/Profile"}>
-          <ProfileImg src={userInfo?.avatar ?? null} />
-          <ProfileNickname>{userInfo?.nickname ?? "손님"}</ProfileNickname>
+          {curUserInfo.avatar && <ProfileImg src={curUserInfo?.avatar} />}
+          <ProfileNickname>{curUserInfo?.nickname ?? "게스트"}</ProfileNickname>
         </ProfileButton>
         <HeaderButton to={"/SignIn"}>
           <div>로그인</div>

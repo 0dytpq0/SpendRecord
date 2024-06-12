@@ -11,7 +11,6 @@ class Auth {
   // }
   async signUp(data) {
     const path = "/register";
-    console.log("data", data);
     const response = await this.#axios.post(path, data);
     const result = response;
 
@@ -22,10 +21,9 @@ class Auth {
   //   "password": "유저 비밀번호"
   // }
   async signIn(data) {
-    const path = "/login";
+    const path = "/login?expiresIn=10s";
     const response = await this.#axios.post(path, data);
     const result = response.data;
-
     return result;
   }
 

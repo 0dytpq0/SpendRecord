@@ -1,26 +1,10 @@
 {
   "records": [
     {
-      "id": "530c",
+      "id": "26e7",
       "createdBy": "adsfzcxv",
       "date": "2024-06-12",
-      "amount": 0,
-      "spendItem": "123",
-      "spendDetail": "123"
-    },
-    {
-      "id": "fcae",
-      "createdBy": "adsfzcxv",
-      "date": "2024-06-12",
-      "amount": 0,
-      "spendItem": "asdw",
-      "spendDetail": "asdw"
-    },
-    {
-      "id": "50c5",
-      "createdBy": "adsfzcxv",
-      "date": "2024-06-12",
-      "amount": "2323",
+      "amount": "123123123",
       "spendItem": "qweqweqwe",
       "spendDetail": "asdasdasd"
     }

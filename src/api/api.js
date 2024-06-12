@@ -16,6 +16,17 @@ class API {
     this.#axios = axios.create({ baseURL: BASE_URL });
     this.record = new Record(this.#axios);
     this.auth = new Auth(axios.create({ baseURL: AUTH_URL }));
+
+    // this.#axios.interceptors.request.use(
+    //   async (config) => {
+    //     await this.auth.getUserInfo();
+
+    //     return config;
+    //   },
+    //   (error) => {
+    //     return error;
+    //   }
+    // );
   }
 }
 
