@@ -2,8 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import DefaultLayout from "../layouts/DefaultLayout";
 import DetailPage from "../pages/DetailPage/DetailPage";
 import HomePage from "../pages/HomePage/HomePage";
-import HomePageLoader from "../pages/HomePage/HomePage.loader";
-import ProfilePage from "../pages/ProfilePage";
+import { ProfilePage } from "../pages/ProfilePage";
 import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SignUpPage";
 
@@ -14,7 +13,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
-        loader: HomePageLoader,
+        // loader: HomePageLoader,
       },
       {
         path: "/detailRecord/:id",
@@ -31,6 +30,7 @@ const router = createBrowserRouter([
       {
         path: "/Profile",
         element: <ProfilePage />,
+        // loader: ProfilePageLoader,
       },
     ],
   },

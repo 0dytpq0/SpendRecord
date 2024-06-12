@@ -23,10 +23,8 @@ class Auth {
   // }
   async signIn(data) {
     const path = "/login";
-    console.log("data", data);
     const response = await this.#axios.post(path, data);
-    const result = response;
-    console.log("response", response);
+    const result = response.data;
 
     return result;
   }
@@ -36,7 +34,6 @@ class Auth {
 
     const response = await this.#axios.get(path);
     const result = response.data;
-    console.log("response", response);
     return result;
   }
 
@@ -51,6 +48,10 @@ class Auth {
     const result = response.result;
 
     return result;
+  }
+
+  async setAccessToken(token) {
+    this.#axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   }
 }
 

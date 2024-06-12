@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -7,20 +7,19 @@ import api from "../../api/api";
 function Profile() {
   const userId = useRef(null);
   const userPassword = useRef(null);
+
   const navigate = useNavigate();
 
-  const { mutate: getUserInfo } = useMutation({
-    mutationFn: (data) => api.auth.getUserInfo(data),
+  const { data: userInfo } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => api.auth.getUserInfo(),
   });
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    const userInfo = {
-      id: userId.current.value,
-      password: userPassword.current.value,
-    };
+
     try {
-      getUserInfo(userInfo);
+      console.log("userInfo", userInfo);
     } catch (error) {
       console.log("error", error);
     }
@@ -29,7 +28,7 @@ function Profile() {
   return (
     <Container onSubmit={handleSignUp}>
       <InputBox>
-        <Label htmlFor="content-date">닉네임</Label>
+        <Label htmlFor="content-date">{userInfo.nickname}</Label>
         <Input
           ref={userId}
           id="content-date"
@@ -42,21 +41,13 @@ function Profile() {
         <Input
           ref={userPassword}
           id="content-item"
-          type="password"
+          type="file"
           placeholder="아바타 이미지"
         />
       </InputBox>
 
       <ButtonBox>
-        <Button type="submit">확인</Button>
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("/SignUp");
-          }}
-        >
-          회원가입
-        </Button>
+        <Button type="submit">변경</Button>
       </ButtonBox>
     </Container>
   );

@@ -9,6 +9,7 @@ const initialState = {
   spendItem: "",
   spendDetail: "",
   selectedItemId: "",
+  isAuthenticated: false,
 };
 const initializeFormData = (state) => {
   state.date = getToday();
@@ -20,6 +21,14 @@ const recordSlice = createSlice({
   name: "record",
   initialState,
   reducers: {
+    login: (state, action) => {
+      localStorage.setItem("accessToken", action.payload);
+      state.isAuthenticated = true;
+    },
+    logout: (state) => {
+      localStorage.removeItem("accessToken");
+      state.isAuthenticated = false;
+    },
     changeMonth: (state, action) => {
       state.month = action.payload;
     },
@@ -50,6 +59,8 @@ export const {
   initFormData,
   selectItem,
   initRecords,
+  login,
+  logout,
 } = recordSlice.actions;
 
 export default recordSlice.reducer;

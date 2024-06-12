@@ -1,33 +1,49 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
+import { login } from "../../redux/slices/record.slice";
 
 function SignIn() {
   const userId = useRef(null);
   const userPassword = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const { mutate: signIp } = useMutation({
+  const { mutate: signIn } = useMutation({
     mutationFn: (data) => api.auth.signIn(data),
+    onSuccess: (data) => {
+      dispatch(login(data.accessToken));
+      api.auth.setAccessToken(data.accessToken);
+      return data;
+    },
+  });
+  const { mutate: signOut } = useMutation({
+    mutationFn: () => api.auth.signOut(),
   });
 
-  const handleSignUp = (e) => {
+  const handleSignIn = (e) => {
     e.preventDefault();
     const userInfo = {
       id: userId.current.value,
       password: userPassword.current.value,
     };
     try {
-      signIp(userInfo);
+      signIn(userInfo);
     } catch (error) {
       console.log("error", error);
     }
   };
 
+  // const handleSignOut = (e) => {
+  //   e.preventDefault();
+  //   dispatch(signOut());
+  // };
+
   return (
-    <Container onSubmit={handleSignUp}>
+    <Container onSubmit={handleSignIn}>
       <InputBox>
         <Label htmlFor="content-date">아이디</Label>
         <Input
