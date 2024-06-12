@@ -5,11 +5,11 @@ export const initialState = {
 };
 
 export const actions = (set) => ({
-  login: (token) => {
+  signIn: (token) => {
     localStorage.setItem("accessToken", token);
     set({ isAuthenticated: true });
   },
-  logout: () => {
+  signOut: () => {
     localStorage.removeItem("accessToken");
     set({ isAuthenticated: false });
   },

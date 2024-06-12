@@ -1,22 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import api from "../../api/api";
 import useRecordStore from "../zustand/record/record.store";
+import { isAmountVailid, isDateValid, isTextExistValid } from "./formValidator";
 
 function Form() {
-  const dispatch = useDispatch();
-  const selector = useSelector((state) => state.record);
   const queryClient = useQueryClient();
   const { date, amount, spendItem, spendDetail, changeValue, initFormData } =
     useRecordStore();
-  console.log(
-    "date, amount, spendItem, spendDetail",
-    date,
-    amount,
-    spendItem,
-    spendDetail
-  );
+
   const { mutate: postRecordToServer } = useMutation({
     mutationFn: (data) => api.record.postRecord(data),
     onSuccess: queryClient.invalidateQueries(["records"]),
@@ -29,19 +21,18 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (!isDateValid(selector.date))
-    //   return alert("날짜는 YYYY-MM-DD 형식으로 입력해주세요(ex, 2024-05-24)");
-    // if (!isAmountVailid(selector.amount))
-    //   return alert("금액은 숫자만 입력해주세요.");
-    // if (
-    //   !isTextExistValid({
-    //     date: selector.date,
-    //     amount: selector.amount,
-    //     spendItem: selector.spendItem,
-    //     spendDetail: selector.spendDetail,
-    //   })
-    // )
-    // return alert("모든 값을 입력해주세요");
+    if (!isDateValid(date))
+      return alert("날짜는 YYYY-MM-DD 형식으로 입력해주세요(ex, 2024-05-24)");
+    if (!isAmountVailid(amount)) return alert("금액은 숫자만 입력해주세요.");
+    if (
+      !isTextExistValid({
+        date: date,
+        amount: amount,
+        spendItem: spendItem,
+        spendDetail: spendDetail,
+      })
+    )
+      return alert("모든 값을 입력해주세요");
     const dataObj = {
       createdBy: userInfo.id,
       date: date,

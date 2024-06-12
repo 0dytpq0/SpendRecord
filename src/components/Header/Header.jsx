@@ -18,7 +18,7 @@ function Header() {
       </HeaderButtonContainer>
       <HeaderButtonContainer>
         <ProfileButton to={"/Profile"}>
-          <ProfileImg src={userInfo?.avatar} />
+          <ProfileImg src={userInfo?.avatar ?? null} />
           <ProfileNickname>{userInfo?.nickname ?? "손님"}</ProfileNickname>
         </ProfileButton>
         <HeaderButton to={"/SignIn"}>
@@ -36,8 +36,8 @@ const HeaderContainer = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
-  height: 100px;
-  border-bottom: 3px solid black;
+  height: 50px;
+  border-bottom: 3px solid #3280a5;
   background-color: #d8e8f0;
 `;
 
@@ -79,8 +79,9 @@ const ProfileNickname = styled.div`
   justify-content: center;
 `;
 const ProfileImg = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  border: none;
   border-radius: 30px;
 `;
 

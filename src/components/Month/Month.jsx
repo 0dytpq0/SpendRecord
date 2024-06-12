@@ -1,17 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { v4 as uuid } from "uuid";
-import { changeMonth } from "../../redux/slices/record.slice";
+import useRecordStore from "../zustand/record/record.store";
 
 function Month() {
   const months = Array.from({ length: 12 }, (_, index) => index + 1 + "월");
-  const dispatch = useDispatch();
-  const selector = useSelector((state) => state.record);
+  const { changeMonth, month } = useRecordStore();
 
   const handleClickMonth = (e) => {
     const month = e.target.innerHTML.replace("월", "");
-    const action = changeMonth(Number(month));
-    dispatch(action);
+    changeMonth(Number(month));
   };
 
   const monthLists = () =>
@@ -20,7 +17,7 @@ function Month() {
         <MonthBox
           key={uuid()}
           $month={Number(item.replace("월", ""))}
-          $curMonth={selector.month}
+          $curMonth={month}
           onClick={handleClickMonth}
         >
           {item}

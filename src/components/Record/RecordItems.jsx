@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
 import { useLoaderData } from "react-router-dom";
 import api from "../../api/api";
+import useRecordStore from "../zustand/record/record.store";
 import ReocrdItem from "./ReocrdItem";
 
 function RecordItems() {
-  const month = useSelector((state) => state.record.month);
+  const { month } = useRecordStore();
   const prevRecord = useLoaderData();
   const { data: records } = useQuery({
     queryKey: ["records"],

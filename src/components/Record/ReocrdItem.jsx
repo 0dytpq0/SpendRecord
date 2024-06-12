@@ -1,10 +1,9 @@
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { selectItem } from "../../redux/slices/record.slice";
+import useRecordStore from "../zustand/record/record.store";
 
 function ReocrdItem({ record }) {
-  const dispatch = useDispatch();
+  const { selectItem } = useRecordStore();
   const paintRecord = (record) => {
     return (
       <LinkDiv
@@ -18,8 +17,7 @@ function ReocrdItem({ record }) {
             spendItem: record.spendItem,
             spendDetail: record.spendDetail,
           };
-          const action = selectItem(dataObj);
-          dispatch(action);
+          selectItem(dataObj);
         }}
       >
         <ColFlexer>

@@ -1,22 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
-import { login } from "../../redux/slices/record.slice";
+import useAuthStore from "../zustand/auth/auth.store";
 
 function SignIn() {
   const userId = useRef(null);
   const userPassword = useRef(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { signIn : logIn } = useAuthStore();
   const queryClient = useQueryClient();
 
   const { mutate: signIn } = useMutation({
     mutationFn: (data) => api.auth.signIn(data),
     onSuccess: (data) => {
-      dispatch(login(data.accessToken));
+      logIn(data.accessToken);
       api.auth.setAccessToken(data.accessToken);
       queryClient.invalidateQueries(["userInfo"]);
       return data;
@@ -39,7 +38,7 @@ function SignIn() {
 
   // const handleSignOut = (e) => {
   //   e.preventDefault();
-  //   dispatch(signOut());
+  //   signOut()
   // };
 
   return (

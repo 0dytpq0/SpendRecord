@@ -15,7 +15,7 @@ function HomePage() {
 
 const Div = styled.div`
   width: 800px;
-  height: 800px;
+  height: 700px;
   margin: 0 auto;
   padding: 12px 20px;
   border-radius: 20px;

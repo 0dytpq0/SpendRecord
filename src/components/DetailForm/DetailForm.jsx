@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
-import { changeValue } from "../../redux/slices/record.slice";
+import useRecordStore from "../zustand/record/record.store";
 import { isDateValid } from "./detailFormValidator";
 
 function DetailForm() {
-  const dispatch = useDispatch();
-  const selector = useSelector((state) => state.record);
+  const { date, amount, spendItem, spendDetail, changeValue } =
+    useRecordStore();
+
   const queryClient = useQueryClient();
   const params = useParams();
 
@@ -29,18 +29,18 @@ function DetailForm() {
   useEffect(() => {
     if (dateRef.current) {
       dateRef.current.focus();
-      dateRef.current.value = selector.date;
+      dateRef.current.value = date;
     }
-  }, [selector.date]);
+  }, [date]);
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    if (isDateValid(selector.date)) {
+    if (isDateValid(date)) {
       const newData = {
-        date: selector.date,
-        amount: selector.amount,
-        spendItem: selector.spendItem,
-        spendDetail: selector.spendDetail,
+        date: date,
+        amount: amount,
+        spendItem: spendItem,
+        spendDetail: spendDetail,
       };
 
       updateRecordToServer({ id: params.id, data: newData });
@@ -68,14 +68,8 @@ function DetailForm() {
           id="content-date"
           type="text"
           ref={dateRef}
-          value={selector.date}
-          onChange={(e) => {
-            const action = changeValue({
-              content: e.target.value,
-              type: "date",
-            });
-            dispatch(action);
-          }}
+          value={date}
+          onChange={(e) => changeValue("date", e.target.value)}
         />
       </InputBox>
       <InputBox>
@@ -84,14 +78,8 @@ function DetailForm() {
           id="content-item"
           type="text"
           placeholder="지출 항목"
-          value={selector.spendItem}
-          onChange={(e) => {
-            const action = changeValue({
-              content: e.target.value,
-              type: "spendItem",
-            });
-            dispatch(action);
-          }}
+          value={spendItem}
+          onChange={(e) => changeValue("spendItem", e.target.value)}
         />
       </InputBox>
       <InputBox>
@@ -100,14 +88,8 @@ function DetailForm() {
           id="content-amount"
           type="text"
           placeholder="지출 금액"
-          value={selector.amount}
-          onChange={(e) => {
-            const action = changeValue({
-              content: e.target.value,
-              type: "amount",
-            });
-            dispatch(action);
-          }}
+          value={amount}
+          onChange={(e) => changeValue("amount", e.target.value)}
         />
       </InputBox>
       <InputBox>
@@ -116,14 +98,8 @@ function DetailForm() {
           id="content-detail"
           type="text"
           placeholder="지출 내용"
-          value={selector.spendDetail}
-          onChange={(e) => {
-            const action = changeValue({
-              content: e.target.value,
-              type: "spendDetail",
-            });
-            dispatch(action);
-          }}
+          value={spendDetail}
+          onChange={(e) => changeValue("spendDetail", e.target.value)}
         />
       </InputBox>
       <ButtonBox>
