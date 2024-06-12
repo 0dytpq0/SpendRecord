@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,12 +11,14 @@ function SignIn() {
   const userPassword = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const { mutate: signIn } = useMutation({
     mutationFn: (data) => api.auth.signIn(data),
     onSuccess: (data) => {
       dispatch(login(data.accessToken));
       api.auth.setAccessToken(data.accessToken);
+      queryClient.invalidateQueries(["userInfo"]);
       return data;
     },
   });

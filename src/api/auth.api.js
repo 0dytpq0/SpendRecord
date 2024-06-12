@@ -34,6 +34,7 @@ class Auth {
 
     const response = await this.#axios.get(path);
     const result = response.data;
+    console.log("userinfo result", result);
     return result;
   }
 
@@ -43,12 +44,14 @@ class Auth {
   // }
   async updateProfile(data) {
     const path = "/profile";
+    console.log("data", data);
     const response = await this.#axios.patch(path, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
     const result = response.data;
+    console.log("update result", result);
     return result;
   }
 

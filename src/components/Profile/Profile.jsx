@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import api from "../../api/api";
 
@@ -8,7 +7,7 @@ function Profile() {
   const userNickname = useRef(null);
   const userAvartar = useRef(null);
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const [img, setImg] = useState("");
 
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo"],
@@ -19,13 +18,14 @@ function Profile() {
     mutationFn: (data) => api.auth.updateProfile(data),
     onSuccess: queryClient.invalidateQueries(["userInfo"]),
   });
-
-  const handleSignUp = (e) => {
+  const handleUpdateProfile = (e) => {
     e.preventDefault();
-
+    const file = userAvartar.current.files[0];
+    const imgUrl = URL.createObjectURL(file);
+    setImg(imgUrl);
     try {
       const profileObj = {
-        avatar: "",
+        avatar: file,
         nickname: userNickname.current.value,
       };
       updateProfile(profileObj);
@@ -35,7 +35,7 @@ function Profile() {
   };
 
   return (
-    <Container onSubmit={handleSignUp}>
+    <Container onSubmit={handleUpdateProfile}>
       <InputBox>
         <Label htmlFor="content-date">{userInfo?.nickname ?? "닉네임"}</Label>
         <Input
@@ -53,6 +53,7 @@ function Profile() {
           type="file"
           placeholder="아바타 이미지"
         />
+        <img src={userInfo?.avatar ?? img} />
       </InputBox>
 
       <ButtonBox>
