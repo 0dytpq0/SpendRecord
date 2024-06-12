@@ -5,7 +5,7 @@ import styled from "styled-components";
 import api from "../../api/api";
 import useAuthStore from "../zustand/auth/auth.store";
 import useRecordStore from "../zustand/record/record.store";
-import { isDateValid } from "./detailFormValidator";
+import { validateDetailFormData } from "./detailFormValidator";
 
 function DetailForm() {
   const { date, amount, spendItem, spendDetail, changeValue } =
@@ -52,20 +52,19 @@ function DetailForm() {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    if (isDateValid(date)) {
-      const newData = {
-        date: date,
-        amount: amount,
-        spendItem: spendItem,
-        spendDetail: spendDetail,
-      };
+    if (!validateDetailFormData({ date, amount, spendItem, spendDetail }))
+      return;
 
-      updateRecordToServer({ id: params.id, data: newData });
+    const newData = {
+      date: date,
+      amount: amount,
+      spendItem: spendItem,
+      spendDetail: spendDetail,
+    };
 
-      navigate(-1);
-    } else {
-      return alert("날짜는 YYYY-MM-DD ");
-    }
+    updateRecordToServer({ id: params.id, data: newData });
+
+    navigate(-1);
   };
 
   const handleDelete = (e) => {

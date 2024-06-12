@@ -21,7 +21,7 @@ class Auth {
   //   "password": "유저 비밀번호"
   // }
   async signIn(data) {
-    const path = "/login?expiresIn=10s";
+    const path = "/login";
     const response = await this.#axios.post(path, data);
     const result = response.data;
     return result;

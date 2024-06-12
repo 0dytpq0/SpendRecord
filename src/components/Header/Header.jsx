@@ -4,7 +4,6 @@ import useAuthStore from "../zustand/auth/auth.store";
 
 function Header() {
   const { curUserInfo } = useAuthStore();
-  console.log("curUserInfo", curUserInfo);
   return (
     <HeaderContainer>
       <HeaderButtonContainer>

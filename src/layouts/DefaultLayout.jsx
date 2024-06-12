@@ -22,6 +22,7 @@ function DefaultLayout() {
       return info;
     },
   });
+
   useEffect(() => {
     if (userInfoError && shouldRenderLayout) {
       signOut();
