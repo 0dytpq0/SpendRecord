@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 import api from "../../api/api";
 
@@ -7,7 +7,6 @@ function Profile() {
   const userNickname = useRef(null);
   const userAvartar = useRef(null);
   const queryClient = useQueryClient();
-  const [img, setImg] = useState("");
 
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo"],
@@ -21,8 +20,6 @@ function Profile() {
   const handleUpdateProfile = (e) => {
     e.preventDefault();
     const file = userAvartar.current.files[0];
-    const imgUrl = URL.createObjectURL(file);
-    setImg(imgUrl);
     try {
       const profileObj = {
         avatar: file,
@@ -53,7 +50,6 @@ function Profile() {
           type="file"
           placeholder="아바타 이미지"
         />
-        <img src={userInfo?.avatar ?? img} />
       </InputBox>
 
       <ButtonBox>

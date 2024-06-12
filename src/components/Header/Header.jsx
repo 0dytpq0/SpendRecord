@@ -8,17 +8,22 @@ function Header() {
     queryKey: ["userInfo"],
     queryFn: () => api.auth.getUserInfo(),
   });
+  console.log("userInfo", userInfo);
   return (
     <HeaderContainer>
       <HeaderButtonContainer>
-        <HeaderButton to={"/"}>HOME</HeaderButton>
-        <HeaderButton to={"/Profile"}>내 프로필</HeaderButton>
+        <HeaderButton to={"/"}>
+          <div>HOME</div>
+        </HeaderButton>
       </HeaderButtonContainer>
       <HeaderButtonContainer>
-        <HeaderButton to={"/Profile"}>
-          {userInfo?.nickname ?? "손님"}
+        <ProfileButton to={"/Profile"}>
+          <ProfileImg src={userInfo?.avatar} />
+          <ProfileNickname>{userInfo?.nickname ?? "손님"}</ProfileNickname>
+        </ProfileButton>
+        <HeaderButton to={"/SignIn"}>
+          <div>로그인</div>
         </HeaderButton>
-        <HeaderButton to={"/SignIn"}>로그인</HeaderButton>
       </HeaderButtonContainer>
     </HeaderContainer>
   );
@@ -40,7 +45,7 @@ const HeaderButtonContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 400px;
+  width: 300px;
   height: 70px;
 `;
 
@@ -51,5 +56,32 @@ const HeaderButton = styled(Link)`
   font-size: 24px;
   border: none;
   background-color: #d8e8f0;
+  & div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 `;
+
+const ProfileButton = styled(Link)`
+  display: flex;
+  align-items: center;
+  width: 45%;
+  color: #577b8d;
+  font-weight: bold;
+  font-size: 24px;
+  border: none;
+  background-color: #d8e8f0;
+`;
+const ProfileNickname = styled.div`
+  width: 80%;
+  display: flex;
+  justify-content: center;
+`;
+const ProfileImg = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+`;
+
 export default Header;
