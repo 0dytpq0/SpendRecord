@@ -2,7 +2,7 @@ import axios from "axios";
 import Auth from "./auth.api";
 import Record from "./record.api";
 
-const BASE_URL = "http://localhost:4000";
+const BASE_URL = "https://spot-notch-fox.glitch.me";
 
 const AUTH_URL = "https://moneyfulpublicpolicy.co.kr";
 
