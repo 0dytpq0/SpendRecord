@@ -38,11 +38,10 @@ class Record {
 
   async updateRecord(id, data) {
     const path = `/records/${id}`;
-    console.log("data", data, id);
     const response = await this.#axios.patch(path, data);
     const result = response.data;
 
-    console.log("result", result);
+    return result;
   }
 }
 
