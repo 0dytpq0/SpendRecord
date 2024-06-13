@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import api from "../../api/api";
 import useAuthStore from "../zustand/auth/auth.store";
 import useRecordStore from "../zustand/record/record.store";
@@ -27,7 +28,11 @@ function DetailForm() {
     onSuccess: () => queryClient.invalidateQueries(["records"]),
     onError: () => {
       signOut();
-      alert("로그인을 하셔야 삭제 가능합니다.");
+      Swal.fire({
+        title: "Error!",
+        text: "로그인을 하셔야 삭제가 가능합니다.",
+        icon: "error",
+      });
     },
   });
 
@@ -39,7 +44,12 @@ function DetailForm() {
     },
     onSuccess: () => queryClient.invalidateQueries(["records"]),
     onError: () => {
-      signOut(), alert("로그인을 하셔야 수정 가능합니다.");
+      signOut(),
+        Swal.fire({
+          title: "Error!",
+          text: "로그인을 하셔야 수정이 가능합니다.",
+          icon: "error",
+        });
     },
   });
 

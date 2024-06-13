@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import api from "../api/api";
 import Header from "../components/Header";
 import useAuthStore from "../components/zustand/auth/auth.store";
@@ -27,7 +28,16 @@ function DefaultLayout() {
   useEffect(() => {
     if (userInfoError && shouldRenderLayout) {
       signOut();
-      alert("로그아웃 되어있습니다.");
+      Swal.fire({
+        title: "Error!",
+        text: "로그아웃 상태입니다.",
+        icon: "error",
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
       navigate("/SignIn");
     }
   }, [userInfoError]);
