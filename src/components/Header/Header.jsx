@@ -3,7 +3,23 @@ import styled from "styled-components";
 import useAuthStore from "../zustand/auth/auth.store";
 
 function Header() {
-  const { curUserInfo } = useAuthStore();
+  const { curUserInfo, isAuthenticated, signOut } = useAuthStore();
+
+  const validatedLoginButton = () => {
+    if (isAuthenticated)
+      return (
+        <HeaderButton onClick={signOut}>
+          <div>로그아웃</div>
+        </HeaderButton>
+      );
+
+    return (
+      <HeaderButton to={"/SignIn"}>
+        <div>로그인</div>
+      </HeaderButton>
+    );
+  };
+
   return (
     <HeaderContainer>
       <HeaderButtonContainer>
@@ -16,9 +32,7 @@ function Header() {
           {curUserInfo.avatar && <ProfileImg src={curUserInfo?.avatar} />}
           <ProfileNickname>{curUserInfo?.nickname ?? "게스트"}</ProfileNickname>
         </ProfileButton>
-        <HeaderButton to={"/SignIn"}>
-          <div>로그인</div>
-        </HeaderButton>
+        {validatedLoginButton()}
       </HeaderButtonContainer>
     </HeaderContainer>
   );

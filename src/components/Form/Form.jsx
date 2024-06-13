@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import api from "../../api/api";
-import { Input, InputBox } from "../Input";
+import { InputBox } from "../Input";
 import useAuthStore from "../zustand/auth/auth.store";
 import useRecordStore from "../zustand/record/record.store";
 import { validateFormData } from "./formValidator";
@@ -28,7 +28,7 @@ function Form() {
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo"],
     queryFn: () => api.auth.getUserInfo(),
-    retry: false,
+    retry: 1,
   });
 
   const handleSubmit = (e) => {
@@ -50,8 +50,8 @@ function Form() {
   return (
     <Container onSubmit={handleSubmit}>
       <InputBox>
+        <Label htmlFor="content-date">날짜</Label>
         <Input
-          label={"날짜"}
           id="content-date"
           type="text"
           value={date}
@@ -59,31 +59,31 @@ function Form() {
         />
       </InputBox>
       <InputBox>
+        <Label htmlFor="content-item">항목</Label>
         <Input
-          label={"항목"}
           id="content-item"
           type="text"
-          placeholder={"지출 항목"}
+          placeholder="지출 항목"
           value={spendItem}
           onChange={(e) => changeValue("spendItem", e.target.value)}
         />
       </InputBox>
       <InputBox>
+        <Label htmlFor="content-amount">금액</Label>
         <Input
-          label={"금액"}
           id="content-amount"
-          type="number"
-          placeholder={"지출 금액"}
+          type="text"
+          placeholder="지출 금액"
           value={amount}
           onChange={(e) => changeValue("amount", e.target.value)}
         />
       </InputBox>
       <InputBox>
+        <Label htmlFor="content-detail">내용</Label>
         <Input
-          label={"내용"}
           id="content-detail"
           type="text"
-          placeholder={"지출 내용"}
+          placeholder="지출 내용"
           value={spendDetail}
           onChange={(e) => changeValue("spendDetail", e.target.value)}
         />
@@ -122,6 +122,24 @@ const Button = styled.button`
 
   &:hover {
     cursor: pointer;
+  }
+`;
+export const Label = styled.label`
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  height: 24px;
+  padding: 3px;
+  margin-top: 5px;
+  border-radius: 10px;
+  border: none;
+
+  &:focus {
+    outline: 2px solid #d8e8f0;
   }
 `;
 

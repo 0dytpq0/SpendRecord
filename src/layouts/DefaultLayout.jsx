@@ -21,7 +21,7 @@ function DefaultLayout() {
       setUserInfo(info);
       return info;
     },
-    retry: false,
+    retry: 1,
   });
 
   useEffect(() => {
