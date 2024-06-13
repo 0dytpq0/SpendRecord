@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import DetailForm from "../../components/DetailForm";
+import RecordDetailForm from "../../components/RecordDetailForm";
 
-function DetailPage() {
+function RecordDetailPage() {
   return (
-    <Div>
-      <DetailForm />
-    </Div>
+    <Container>
+      <RecordDetailForm />
+    </Container>
   );
 }
 
-const Div = styled.div`
+const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,4 +17,4 @@ const Div = styled.div`
   height: 97vh;
   margin: 0 auto;
 `;
-export default DetailPage;
+export default RecordDetailPage;

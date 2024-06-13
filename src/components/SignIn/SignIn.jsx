@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import api from "../../api/api";
 import useAuthStore from "../zustand/auth/auth.store";
 
@@ -9,16 +10,28 @@ function SignIn() {
   const userId = useRef(null);
   const userPassword = useRef(null);
   const navigate = useNavigate();
-  const { signIn : logIn } = useAuthStore();
+  const { signIn: logIn } = useAuthStore();
   const queryClient = useQueryClient();
 
   const { mutate: signIn } = useMutation({
     mutationFn: (data) => api.auth.signIn(data),
     onSuccess: (data) => {
-      logIn(data.accessToken);
+      const info = { ...data, id: data.userId };
+      delete info.id;
+      delete info.accessToken;
+      logIn(info);
       api.auth.setAccessToken(data.accessToken);
       queryClient.invalidateQueries(["userInfo"]);
+      navigate("/");
+
       return data;
+    },
+    onError: () => {
+      Swal.fire({
+        title: "Error!",
+        text: "로그인 실패",
+        icon: "error",
+      });
     },
   });
 
@@ -28,18 +41,8 @@ function SignIn() {
       id: userId.current.value,
       password: userPassword.current.value,
     };
-    try {
-      signIn(userInfo);
-      navigate("/");
-    } catch (error) {
-      console.log("error", error);
-    }
+    signIn(userInfo);
   };
-
-  // const handleSignOut = (e) => {
-  //   e.preventDefault();
-  //   signOut()
-  // };
 
   return (
     <Container onSubmit={handleSignIn}>
@@ -67,7 +70,7 @@ function SignIn() {
         <Button
           onClick={(e) => {
             e.preventDefault();
-            navigate("/SignUp");
+            navigate("/sign-up");
           }}
         >
           회원가입

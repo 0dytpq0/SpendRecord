@@ -21,11 +21,7 @@ function SignUp() {
       password: userPassword.current.value,
       nickname: userNickName.current.value,
     };
-    try {
-      signUp(userInfo);
-    } catch (error) {
-      console.log("error", error);
-    }
+    signUp(userInfo);
   };
 
   return (
@@ -63,7 +59,7 @@ function SignUp() {
         <Button
           onClick={(e) => {
             e.preventDefault();
-            navigate("/SignIn");
+            navigate("/sign-in");
           }}
         >
           로그인

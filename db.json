@@ -1,12 +1,20 @@
 {
   "records": [
     {
-      "id": "6961",
+      "id": "8102",
       "createdBy": "adsfzcxv",
       "date": "2024-06-12",
       "amount": "123",
-      "spendItem": "124",
-      "spendDetail": "23123"
+      "spendItem": "124aa",
+      "spendDetail": "2323aa"
+    },
+    {
+      "id": "47db",
+      "createdBy": "adsfzcxv",
+      "date": "2024-06-13",
+      "amount": "123",
+      "spendItem": "123",
+      "spendDetail": "123"
     }
   ]
 }

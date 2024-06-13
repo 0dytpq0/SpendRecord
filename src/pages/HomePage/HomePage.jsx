@@ -1,19 +1,19 @@
 import styled from "styled-components";
 import Form from "../../components/Form";
 import Month from "../../components/Month/Month";
-import Record from "../../components/Record/Record";
+import Records from "../../components/Record/Records";
 
 function HomePage() {
   return (
-    <Div>
+    <Container>
       <Form />
       <Month />
-      <Record />
-    </Div>
+      <Records />
+    </Container>
   );
 }
 
-const Div = styled.div`
+const Container = styled.div`
   width: 800px;
   height: 700px;
   margin: 0 auto;

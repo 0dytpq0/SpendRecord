@@ -1,17 +1,18 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import api from "../../api/api";
-import { InputBox } from "../Input";
 import useAuthStore from "../zustand/auth/auth.store";
-import useRecordStore from "../zustand/record/record.store";
+import useFormStore from "../zustand/record/form.store";
 import { validateFormData } from "./formValidator";
 
 function Form() {
   const queryClient = useQueryClient();
   const { date, amount, spendItem, spendDetail, changeValue, initFormData } =
-    useRecordStore();
+    useFormStore();
+  const { curUserInfo } = useAuthStore();
   const { signOut } = useAuthStore();
 
+  // 서버에 요청해서 만들어진 정보는 useQuery를 사용한다면 리액트 쿼리의 캐시에 저장된다.
   const { mutate: postRecordToServer } = useMutation({
     mutationFn: async (data) => {
       await api.auth.getUserInfo();
@@ -25,25 +26,20 @@ function Form() {
     },
   });
 
-  const { data: userInfo } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: () => api.auth.getUserInfo(),
-    retry: 1,
-  });
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!curUserInfo.id) return alert("로그인 하세요");
     if (!validateFormData({ date, amount, spendItem, spendDetail })) return;
 
-    const dataObj = {
-      createdBy: userInfo?.id ?? null,
+    const data = {
+      createdBy: curUserInfo.id,
       date: date,
       amount: amount,
       spendItem: spendItem,
       spendDetail: spendDetail,
     };
 
-    postRecordToServer(dataObj);
+    postRecordToServer(data);
     initFormData();
   };
 
@@ -129,7 +125,13 @@ export const Label = styled.label`
   font-weight: 500;
   color: white;
 `;
-
+const InputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 20px;
+  width: 20%;
+`;
 const Input = styled.input`
   width: 100%;
   height: 24px;

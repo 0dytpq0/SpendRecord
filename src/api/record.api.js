@@ -20,7 +20,6 @@ class Record {
 
   async postRecord(data) {
     const path = `/records`;
-    console.log("data", data);
     const response = await this.#axios.post(path, data);
     const result = response.data;
 

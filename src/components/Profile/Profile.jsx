@@ -1,41 +1,34 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import styled from "styled-components";
 import api from "../../api/api";
+import useAuthStore from "../zustand/auth/auth.store";
 
 function Profile() {
   const userNickname = useRef(null);
-  const userAvartar = useRef(null);
+  const userAvatar = useRef(null);
   const queryClient = useQueryClient();
-
-  const { data: userInfo } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: () => api.auth.getUserInfo(),
-    retry: false,
-  });
+  const { curUserInfo } = useAuthStore();
 
   const { mutate: updateProfile } = useMutation({
     mutationFn: (data) => api.auth.updateProfile(data),
     onSuccess: queryClient.invalidateQueries(["userInfo"]),
   });
+
   const handleUpdateProfile = (e) => {
     e.preventDefault();
-    const file = userAvartar.current.files[0];
-    try {
-      const profileObj = {
-        avatar: file,
-        nickname: userNickname.current.value,
-      };
-      updateProfile(profileObj);
-    } catch (error) {
-      console.log("error", error);
-    }
+    const file = userAvatar.current.files[0];
+    const profile = {
+      avatar: file,
+      nickname: userNickname.current.value,
+    };
+    updateProfile(profile);
   };
 
   return (
     <Container onSubmit={handleUpdateProfile}>
       <InputBox>
-        <Label htmlFor="content-date">{userInfo?.nickname ?? "닉네임"}</Label>
+        <Label htmlFor="content-date">{curUserInfo.nickname ?? "닉네임"}</Label>
         <Input
           ref={userNickname}
           id="content-date"
@@ -46,13 +39,12 @@ function Profile() {
       <InputBox>
         <Label htmlFor="content-item">아바타 이미지</Label>
         <Input
-          ref={userAvartar}
+          ref={userAvatar}
           id="content-item"
           type="file"
           placeholder="아바타 이미지"
         />
       </InputBox>
-
       <ButtonBox>
         <Button type="submit">변경</Button>
       </ButtonBox>

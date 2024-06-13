@@ -14,7 +14,7 @@ function Header() {
       );
 
     return (
-      <HeaderButton to={"/SignIn"}>
+      <HeaderButton to={"/sign-in"}>
         <div>로그인</div>
       </HeaderButton>
     );
@@ -28,7 +28,7 @@ function Header() {
         </HeaderButton>
       </HeaderButtonContainer>
       <HeaderButtonContainer>
-        <ProfileButton to={"/Profile"}>
+        <ProfileButton to={"/profile"}>
           {curUserInfo.avatar && <ProfileImg src={curUserInfo?.avatar} />}
           <ProfileNickname>{curUserInfo?.nickname ?? "게스트"}</ProfileNickname>
         </ProfileButton>

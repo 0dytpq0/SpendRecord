@@ -1,23 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import api from "../../api/api";
 import useAuthStore from "../zustand/auth/auth.store";
-import useRecordStore from "../zustand/record/record.store";
+import useFormStore from "../zustand/record/form.store";
 import { validateDetailFormData } from "./detailFormValidator";
 
-function DetailForm() {
-  const { date, amount, spendItem, spendDetail, changeValue } =
-    useRecordStore();
+function RecordDetailForm() {
+  const { date, amount, spendItem, spendDetail, changeValue } = useFormStore();
   const { signOut } = useAuthStore();
 
   const queryClient = useQueryClient();
   const params = useParams();
 
   const navigate = useNavigate();
-  const dateRef = useRef(null);
 
   const { mutate: deleteRecordToServer } = useMutation({
     mutationFn: async (id) => {
@@ -53,13 +50,6 @@ function DetailForm() {
     },
   });
 
-  useEffect(() => {
-    if (dateRef.current) {
-      dateRef.current.focus();
-      dateRef.current.value = date;
-    }
-  }, [date]);
-
   const handleUpdate = (e) => {
     e.preventDefault();
     if (!validateDetailFormData({ date, amount, spendItem, spendDetail }))
@@ -72,18 +62,38 @@ function DetailForm() {
       spendDetail: spendDetail,
     };
 
-    updateRecordToServer({ id: params.id, data: newData });
+    Swal.fire({
+      title: "수정 하시겠습니까?",
+      text: "되돌릴 수 없습니다, 신중하세요.",
+      icon: "warning",
+      confirmButtonText: "수정",
+      cancelButtonText: "취소",
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updateRecordToServer({ id: params.id, data: newData });
 
-    navigate(-1);
+        navigate(-1);
+      }
+    });
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
-    if (window.confirm("삭제 하시겠습니까?")) {
-      deleteRecordToServer(params.id);
+    Swal.fire({
+      title: "삭제 하시겠습니까?",
+      text: "되돌릴 수 없습니다, 신중하세요.",
+      icon: "warning",
+      confirmButtonText: "삭제", // confirm 버튼 텍스트 지정
+      cancelButtonText: "취소", // cancel 버튼 텍스트 지정
 
-      navigate(-1);
-    }
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteRecordToServer(params.id);
+        navigate(-1);
+      }
+    });
   };
 
   return (
@@ -93,7 +103,6 @@ function DetailForm() {
         <Input
           id="content-date"
           type="text"
-          ref={dateRef}
           value={date}
           onChange={(e) => changeValue("date", e.target.value)}
         />
@@ -205,4 +214,4 @@ const Label = styled.label`
   font-size: 12px;
 `;
 
-export default DetailForm;
+export default RecordDetailForm;

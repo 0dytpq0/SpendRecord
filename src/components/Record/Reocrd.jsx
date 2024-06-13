@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import useRecordStore from "../zustand/record/record.store";
+import useFormStore from "../zustand/record/form.store";
 
-function ReocrdItem({ record }) {
-  const { selectItem } = useRecordStore();
+function Reocrd({ record }) {
+  const { selectRecord } = useFormStore();
   const paintRecord = (record) => {
     return (
       <LinkDiv
         key={record.id}
-        to={`/detailRecord/${record.id}`}
+        to={`/records/${record.id}`}
         onClick={() => {
           const dataObj = {
             id: record.id,
@@ -17,7 +17,7 @@ function ReocrdItem({ record }) {
             spendItem: record.spendItem,
             spendDetail: record.spendDetail,
           };
-          selectItem(dataObj);
+          selectRecord(dataObj);
         }}
       >
         <ColFlexer>
@@ -84,4 +84,4 @@ const Amount = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-export default ReocrdItem;
+export default Reocrd;

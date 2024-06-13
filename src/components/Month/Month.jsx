@@ -1,31 +1,29 @@
 import styled from "styled-components";
-import { v4 as uuid } from "uuid";
-import useRecordStore from "../zustand/record/record.store";
-
+import useFormStore from "../zustand/record/form.store";
+// 비교하고 함 보자
 function Month() {
-  const months = Array.from({ length: 12 }, (_, index) => index + 1 + "월");
-  const { changeMonth, month } = useRecordStore();
+  const months = Array.from({ length: 12 }, (_, index) => index + 1);
+  const { changeMonth, month: currentMonth } = useFormStore();
 
-  const handleClickMonth = (e) => {
-    const month = e.target.innerHTML.replace("월", "");
-    changeMonth(Number(month));
+  const handleClickMonth = (month) => {
+    // react스럽지 않다, 클릭했을 때
+    changeMonth(month);
   };
 
-  const monthLists = () =>
-    months.map((item) => {
-      return (
+  return (
+    <Container>
+      {months.map((month) => (
         <MonthBox
-          key={uuid()}
-          $month={Number(item.replace("월", ""))}
-          $curMonth={month}
-          onClick={handleClickMonth}
+          key={month}
+          $month={month}
+          $curMonth={currentMonth}
+          onClick={() => handleClickMonth(month)}
         >
-          {item}
+          {month}월
         </MonthBox>
-      );
-    });
-
-  return <Container key={uuid()}>{monthLists()}</Container>;
+      ))}
+    </Container>
+  );
 }
 
 const Container = styled.div`
